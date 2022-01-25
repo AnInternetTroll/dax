@@ -1,5 +1,6 @@
 /// <reference lib="dom" />
 
+// Names
 const formEl = document.querySelector("form");
 const nameEl = document.querySelector("input");
 const namesEl = document.querySelector("#names");
@@ -37,3 +38,24 @@ formEl.addEventListener("submit", (e) => {
 	e.preventDefault();
 	addName(nameEl.value);
 });
+
+// Lucky number
+const luckyNumberGuessInputEl = document.querySelector("#lucky-number-guess");
+const luckyNumberEl = document.querySelector("#luckynumber");
+// First lucky number
+luckyNumberEl.textContent = Math.round(Math.random() * 1000);
+
+setTimeout(
+	() => {
+		setInterval(() => {
+			luckyNumberEl.textContent = Math.round(Math.random() * 1000);
+			if (luckyNumberGuessInputEl.value == luckyNumberEl.textContent) {
+				document.body.classList.add("lucky");
+				setTimeout(() => document.body.classList.remove("lucky"), 10 * 1000);
+			}
+		}, 60 * 1000 // A minute
+		);
+	},
+	(60 - new Date().getSeconds()) * // How many seconds until the next minute
+		1000,
+);
