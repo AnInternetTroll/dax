@@ -17,6 +17,7 @@ router.get("/names", (ctx) => {
 	ctx.response.headers.set("content-type", "application/json");
 	ctx.response.body = JSON.stringify(names);
 });
+
 router.post("/names", async (ctx) => {
 	const bodyOak = ctx.request.body();
 	if (bodyOak.type !== "json") {
@@ -30,8 +31,10 @@ router.post("/names", async (ctx) => {
 	ctx.response.headers.set("content-type", "application/json");
 	ctx.response.body = JSON.stringify(names);
 });
+
 app.use(router.allowedMethods());
 app.use(router.routes());
+
 app.use(async (ctx) => {
 	await send(ctx, ctx.request.url.pathname, {
 		root: `${Deno.cwd()}/static`,
